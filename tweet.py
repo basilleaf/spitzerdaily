@@ -39,9 +39,9 @@ if not not_yet_tweeted:
     not_yet_tweeted = all_images
 
 # pick a random line from the not_yet_tweeted list
-image_info = random.choice(not_yet_tweeted).split(',')
-logger.debug(image_info)
-reader = csv.reader([line])
+random_line = random.choice(not_yet_tweeted)
+logger.debug(random_line)
+reader = csv.reader([random_line])
 (url, img_url, tweet) = list(reader)[0]
 
 # download image locally
@@ -59,7 +59,8 @@ logger.info("tweeted %s" % (tweet_with_link))
 # add to tweeted.log
 with open(tweeted_log, 'a') as csvfile:
     csv_writer = csv.writer(csvfile)
-    csv_writer.writerow(list(image_info))
+    csv_writer.writerow([url, img_url, tweet])
+
 
 # do followbacks
 followers = api.followers_ids(SCREEN_NAME)
